@@ -22,18 +22,18 @@ function makeDir(){
   });
 }
 
-function saveFiles(links) {
+function writeFile(err, fileName, fileContent) {
+  fs.writeFile('text/' + fileName, fileContent, function(err) {
+    if(err) console.error(err);
+    else console.log(fileName + ' was saved!');
+  });
+}
 
+function saveFiles(links) {
   links.forEach(function(regURL) {
     var simpleFileName = regURL.split('/').slice(-1)[0].split('.').slice(0)[0] + '.txt';
     request(regURL, function (error, response, html) {
-      fs.writeFile('text/' + simpleFileName, html, function(err) {
-        if(err) {
-          return new Error(err);
-        } else {
-          console.log(simpleFileName + ' was saved!');
-        }
-      });
+      writeFile(error, simpleFileName, html);
     });
   });
 }

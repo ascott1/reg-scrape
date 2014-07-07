@@ -1,13 +1,58 @@
 #!/usr/bin/env node
+var http = require('http');
+var fs = require('fs');
 var request = require('request');
 var cheerio = require('cheerio');
+var mkdirp = require('mkdirp');
 
-// remove nod and path from the arguments
 var args = process.argv.slice(2);
-var url = 'http://www.gpo.gov/fdsys/browse/collectionCfr.action?selectedYearFrom=2014&go=Go'
+var year;
+
+if (args.length > 0) {
+  year = args[0];
+} else {
+  year = new Date().getFullYear();
+}
+
+var url = 'http://www.gpo.gov/fdsys/browse/collectionCfr.action?selectedYearFrom=' + year + '&go=Go';
+
+function makeDir(){
+  mkdirp('./text', function (err) {
+    if (err) console.error(err);
+  });
+}
+
+function saveFiles(links) {
+
+  links.forEach(function(regURL) {
+    var simpleFileName = regURL.split('/').slice(-1)[0].split('.').slice(0)[0] + '.txt';
+    request(regURL, function (error, response, html) {
+      fs.writeFile('text/' + simpleFileName, html, function(err) {
+        if(err) {
+          return new Error(err);
+        } else {
+          console.log(simpleFileName + ' was saved!');
+        }
+      });
+    });
+  });
+}
+
+function getURLs ($, type) {
+  var linkList = [];
+
+  $('.cfr-download-links a:contains("Text")').each(function(index) {
+    linkList.push($(this).attr('href'));
+  });
+
+  makeDir();
+  saveFiles(linkList);
+}
 
 request(url, function (error, response, html) {
   if (!error && response.statusCode == 200) {
-    console.log(html);
+    var $ = cheerio.load(html);
+
+    getURLs($, 'Text');
   }
 });

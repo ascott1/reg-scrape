@@ -1,6 +1,11 @@
 # General
  .DS_Store
 
+# Reg Data
+text/
+xml/
+json/
+
 # Logs
 logs
 *.log

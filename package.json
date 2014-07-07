@@ -18,6 +18,7 @@
   "homepage": "https://github.com/ascott1/reg-scrape",
   "dependencies": {
     "cheerio": "^0.17.0",
+    "mkdirp": "^0.5.0",
     "request": "^2.36.0"
   }
 }

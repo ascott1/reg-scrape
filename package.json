@@ -1,10 +1,10 @@
 {
   "name": "reg-scrape",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A command line tool for scraping US regulations.",
   "main": "index.js",
   "scripts": {
-    "test": "npm test"
+    "test": ""
   },
   "repository": {
     "type": "git",

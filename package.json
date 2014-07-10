@@ -20,5 +20,8 @@
     "cheerio": "^0.17.0",
     "mkdirp": "^0.5.0",
     "request": "^2.36.0"
+  },
+  "bin": {
+    "reg-scrape": "./index.js"
   }
 }

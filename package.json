@@ -1,6 +1,6 @@
 {
   "name": "reg-scrape",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A command line tool for scraping US regulations.",
   "main": "index.js",
   "scripts": {
